@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>💌 Hemligt brev – Dag för dag</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #fff6f6;
+      color: #3a3a3a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 20px;
+      text-align: center;
+    }
+    #message {
+      font-size: 1.5em;
+      max-width: 600px;
+      margin-top: 20px;
+    }
+    #hint {
+      font-style: italic;
+      margin-bottom: 15px;
+      color: #a33;
+    }
+    input {
+      padding: 10px;
+      font-size: 1.2em;
+      width: 250px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border-radius: 5px;
+      border: none;
+      background-color: #a33;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #d55;
+    }
+    #error {
+      color: #a33;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>💖 Dagens hemliga brev 💖</h1>
+  <div id="hint"></div>
+  <input type="text" id="passwordInput" placeholder="Skriv lösenordet här" />
+  <button onclick="checkPassword()">Öppna brevet</button>
+  <div id="error"></div>
+  <div id="message"></div>
+
+  <script>
+    const letters = [
+      {
+        hint: "Jag är röd och söt, men inte en tomat.",
+        password: "jordgubbe",
+        message: "Du är mitt solsken även på regniga dagar."
+      },
+      {
+        hint: "Jag är gul och rund, och jag går upp på morgonen.",
+        password: "solen",
+        message: "Varje dag med dig är som en dröm jag aldrig vill vakna ifrån."
+      },
+      {
+        hint: "Jag har taggar men är inte en igelkott, jag doftar gott.",
+        password: "ros",
+        message: "Du får mitt hjärta att slå snabbare än någon annan."
+      },
+      {
+        hint: "Jag är kall och vit, smälter i munnen på sommaren.",
+        password: "glass",
+        message: "Tack för att du finns och gör livet bättre."
+      },
+      {
+        hint: "Jag flyger högt och är färgglad på himlen.",
+        password: "fjäril",
+        message: "Jag älskar allt med dig, även dina små konstigheter."
+      }
+    ];
+
+    // Räkna ut dagens index baserat på datum, looping runt listan
+    const startDate = new Date(2025, 5, 14); // Sätt startdatum (år, månad-1, dag)
+    const today = new Date();
+    const diffTime = today - startDate;
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const index = diffDays % letters.length; // Loopar runt listan
+
+    const currentLetter = letters[index];
+    document.getElementById('hint').innerText = "Ledtråd: " + currentLetter.hint;
+
+    function checkPassword() {
+      const input = document.getElementById('passwordInput').value.toLowerCase().trim();
+      const errorDiv = document.getElementById('error');
+      const messageDiv = document.getElementById('message');
+
+      if(input === currentLetter.password) {
+        errorDiv.innerText = "";
+        messageDiv.innerText = currentLetter.message;
+        document.getElementById('passwordInput').style.display = 'none';
+        document.querySelector('button').style.display = 'none';
+        document.getElementById('hint').style.display = 'none';
+      } else {
+        errorDiv.innerText = "Fel lösenord, försök igen!";
+        messageDiv.innerText = "";
+      }
+    }
+  </script>
+</body>
+</html>
